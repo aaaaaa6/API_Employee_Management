@@ -126,3 +126,11 @@ GO
 
 INSERT INTO  [dbo].[Employee] VALUES('123','Empleados 1','M',GETDATE(),2500000,1)
 INSERT INTO  [dbo].[Employee] VALUES('456','Empleados 2','F',GETDATE(),3500000,0)
+INSERT INTO  [dbo].[Employee] VALUES('789','Empleados 3','M',GETDATE(),2500000,1)
+INSERT INTO  [dbo].[Employee] VALUES('101','Empleados 4','F',GETDATE(),3500000,0)
+INSERT INTO  [dbo].[Employee] VALUES('102','Empleados 5','M',GETDATE(),2500000,1)
+INSERT INTO  [dbo].[Employee] VALUES('103','Empleados 6','F',GETDATE(),3500000,0)
+INSERT INTO  [dbo].[Employee] VALUES('104','Empleados 7','M',GETDATE(),2500000,1)
+INSERT INTO  [dbo].[Employee] VALUES('105','Empleados 8','F',GETDATE(),3500000,0)
+INSERT INTO  [dbo].[Employee] VALUES('106','Empleados 8','M',GETDATE(),2500000,1)
+INSERT INTO  [dbo].[Employee] VALUES('107','Empleados 10','F',GETDATE(),3500000,0)
