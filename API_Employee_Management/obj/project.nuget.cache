@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "wR6gAE2yPxALOmHCMU0So1zrV3I5CPr2aaTbZEnDKwgJN9y3QKJLmrAdUenuwaPFgXAw9jvrbIXBCIBeGRIP8w==",
+  "dgSpecHash": "dQnjyaQ8Uw1Aeb0GtjWvzajHeV6vkPzzQCeFNhh6xGXcv9arJDCEXA80E/KY0wE/bhDqA4BcwO7UdBBhlYRBiQ==",
   "success": true,
   "projectFilePath": "C:\\Angular\\APIs\\API_Employee_Management\\API_Employee_Management\\API_Employee_Management.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\j_ale\\.nuget\\packages\\bricelam.entityframeworkcore.pluralizer\\1.0.0\\bricelam.entityframeworkcore.pluralizer.1.0.0.nupkg.sha512",
+    "C:\\Users\\j_ale\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.7\\microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
     "C:\\Users\\j_ale\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\j_ale\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\j_ale\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

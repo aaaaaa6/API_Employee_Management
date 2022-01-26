@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_Employee_Management.Models;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Employee_Management.Controllers
 {
@@ -24,6 +25,7 @@ namespace API_Employee_Management.Controllers
 
         // GET: api/Employees
         [HttpGet("GetEmployees")]
+     
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
             var response = await _context.Employees.OrderBy(o=> o.Nombre).ToListAsync();
@@ -33,6 +35,7 @@ namespace API_Employee_Management.Controllers
 
         // GET: api/Employees/5
         [HttpGet("GetEmployeesBySearch")]
+      
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployeesBySearch(string search = null)
         {
             if (search != null)
@@ -48,7 +51,7 @@ namespace API_Employee_Management.Controllers
             }
             else
             {
-                var employee = await _context.Employees.ToListAsync();
+                var employee = await _context.Employees.OrderBy(o => o.Nombre).ToListAsync();
 
                 return Ok(employee);
             }   
@@ -59,13 +62,9 @@ namespace API_Employee_Management.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("PutEmployee")]
-        public async Task<IActionResult> PutEmployee(int id, [FromBody]Employee employee)
+        public async Task<ActionResult<Employee>>PutEmployee([FromBody]Employee employee)
         {
-            if (id != employee.Id)
-            {
-                return BadRequest();
-            }
-
+            
             _context.Entry(employee).State = EntityState.Modified;
 
             try
@@ -74,7 +73,7 @@ namespace API_Employee_Management.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!EmployeeExists(employee.Cedula))
                 {
                     return NotFound();
                 }
@@ -84,19 +83,28 @@ namespace API_Employee_Management.Controllers
                 }
             }
 
-            return NoContent();
+            return CreatedAtAction("GetEmployees", new { id = employee.Id }, employee);
         }
 
         // POST: api/Employees
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("InsertEmployee")]
-        public async Task<ActionResult<Employee>> InsertEmployee(Employee employees)
+        public async Task<ActionResult<Employee>> InsertEmployee([FromBody]Employee employees)
         {
             _context.Employees.Add(employees);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEmployees", new { id = employees.Id }, employees);
+        }
+
+        [HttpPost("InsertEmployees")]
+        public async Task<ActionResult<List<Employee>>> InsertEmployees([FromBody] List<Employee> employees)
+        {
+            _context.Employees.AddRange(employees);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetEmployees", employees);
         }
 
         // DELETE: api/Employees/5
@@ -115,9 +123,9 @@ namespace API_Employee_Management.Controllers
             return employee;
         }
 
-        private bool EmployeeExists(int id)
+        private bool EmployeeExists(string cedula)
         {
-            return _context.Employees.Any(e => e.Id == id);
+            return _context.Employees.Any(e => e.Cedula == cedula);
         }
     }
 }

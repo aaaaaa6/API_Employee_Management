@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API_Employee_Management.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace API_Employee_Management.Controllers
 {
@@ -19,6 +23,48 @@ namespace API_Employee_Management.Controllers
         {
             _context = context;
         }
+
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(string credenciales)
+        {
+
+            if (credenciales == null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            string[] valores = credenciales.Split(",");
+
+            var login = valores[0];
+            var pass = valores[1];
+
+            var user = await _context.Users.Where(u => u.Login == login && u.Pass == pass).FirstOrDefaultAsync();
+ 
+
+            if (user != null)
+            {
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: "http://localhost:5000",
+                    audience: "http://localhost:5000",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(5),
+                    signingCredentials: signinCredentials
+                );
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                return Ok(new { Token = tokenString });
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
+
+
+
 
 
         // GET: api/Users/5
